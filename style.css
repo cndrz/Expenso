@@ -535,16 +535,22 @@ body.invert-reality {
     color: var(--acid);
     padding: 15px 0;
     display: flex;
-    white-space: nowrap;
     overflow: hidden;
     font-weight: 700;
     font-size: 1.5rem;
     border-top: var(--border-width) solid var(--black);
 }
 
-.auth-marquee span {
+.marquee-content {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-around;
+    min-width: 100%;
     animation: marquee 15s linear infinite;
-    padding-right: 50px;
+}
+
+.marquee-content span {
+    white-space: nowrap;
 }
 
 @keyframes marquee {
