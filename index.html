@@ -16,22 +16,37 @@
 <body>
     <!-- AUTH SCREEN -->
     <div id="auth-screen">
-        <h1 style="font-size: 3rem; margin-bottom: 20px; text-shadow: 4px 4px 0 var(--black);">EXPENSO.</h1>
-        <div class="brutal-box auth-box">
-            <div class="box-header">
-                <h2 id="auth-title">SYSTEM_LOGIN</h2>
+        <div class="auth-showcase">
+            <h1 class="auth-hero-title">EXPENSO.</h1>
+            <p class="auth-subtitle">A BRUTALIST AI-POWERED FINANCIAL TRACKER.</p>
+            <div class="auth-features">
+                <div class="feature-item"><span class="feature-icon">►</span> MAGIC ENTRY (AI PARSING)</div>
+                <div class="feature-item"><span class="feature-icon">►</span> STRICT KILL SWITCHES</div>
+                <div class="feature-item"><span class="feature-icon">►</span> CLOUD SYNC</div>
+                <div class="feature-item"><span class="feature-icon">►</span> NO BLOAT. NO MERCY.</div>
             </div>
-            <form id="auth-form">
-                <input type="text" id="auth-username" placeholder="USERNAME" autocomplete="username" style="display: none;">
-                <input type="email" id="auth-email" placeholder="EMAIL" autocomplete="email" required>
-                <div style="position: relative; display: flex;">
-                    <input type="password" id="auth-password" placeholder="PASSWORD" autocomplete="current-password" required style="flex: 1;">
-                    <button type="button" id="show-password-btn" style="position: absolute; right: 0; top: 0; bottom: 0; padding: 0 15px; background: var(--acid); border: none; border-left: var(--border-width) solid var(--black); cursor: pointer; font-weight: bold; color: var(--black); font-size: 0.8rem;">SHOW</button>
+            <div class="auth-marquee">
+                <span>TRACK EVERY PENNY. DESTROY DEBT. BUILD WEALTH. </span>
+                <span>TRACK EVERY PENNY. DESTROY DEBT. BUILD WEALTH. </span>
+            </div>
+        </div>
+        <div class="auth-form-container">
+            <div class="brutal-box auth-box">
+                <div class="box-header">
+                    <h2 id="auth-title">SYSTEM_LOGIN</h2>
                 </div>
-                <input type="password" id="auth-confirm-password" placeholder="CONFIRM_PASSWORD" autocomplete="new-password" style="display: none;">
-                <button type="submit" id="auth-submit-btn">ENTER</button>
-            </form>
-            <button id="auth-toggle-btn">CREATE_ACCOUNT</button>
+                <form id="auth-form">
+                    <input type="text" id="auth-username" placeholder="USERNAME" autocomplete="username" style="display: none;">
+                    <input type="email" id="auth-email" placeholder="EMAIL" autocomplete="email" required>
+                    <div style="position: relative; display: flex;">
+                        <input type="password" id="auth-password" placeholder="PASSWORD" autocomplete="current-password" required style="flex: 1;">
+                        <button type="button" id="show-password-btn" style="position: absolute; right: 0; top: 0; bottom: 0; padding: 0 15px; background: var(--acid); border: none; border-left: var(--border-width) solid var(--black); cursor: pointer; font-weight: bold; color: var(--black); font-size: 0.8rem;">SHOW</button>
+                    </div>
+                    <input type="password" id="auth-confirm-password" placeholder="CONFIRM_PASSWORD" autocomplete="new-password" style="display: none;">
+                    <button type="submit" id="auth-submit-btn">ENTER</button>
+                </form>
+                <button id="auth-toggle-btn">CREATE_ACCOUNT</button>
+            </div>
         </div>
     </div>
 
