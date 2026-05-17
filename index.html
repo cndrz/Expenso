@@ -22,7 +22,11 @@
             <form id="auth-form">
                 <input type="text" id="auth-username" placeholder="USERNAME" autocomplete="username" style="display: none;">
                 <input type="email" id="auth-email" placeholder="EMAIL" autocomplete="email" required>
-                <input type="password" id="auth-password" placeholder="PASSWORD" autocomplete="current-password" required>
+                <div style="position: relative; display: flex;">
+                    <input type="password" id="auth-password" placeholder="PASSWORD" autocomplete="current-password" required style="flex: 1;">
+                    <button type="button" id="show-password-btn" style="position: absolute; right: 0; top: 0; bottom: 0; padding: 0 15px; background: var(--acid); border: none; border-left: var(--border-width) solid var(--black); cursor: pointer; font-weight: bold; color: var(--black); font-size: 0.8rem;">SHOW</button>
+                </div>
+                <input type="password" id="auth-confirm-password" placeholder="CONFIRM_PASSWORD" autocomplete="new-password" style="display: none;">
                 <button type="submit" id="auth-submit-btn">ENTER</button>
             </form>
             <button id="auth-toggle-btn">CREATE_ACCOUNT</button>
