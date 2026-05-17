@@ -85,6 +85,54 @@ const authToggleBtn = document.getElementById('auth-toggle-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const appHeaderTitle = document.getElementById('app-header-title');
 
+// INFO UI
+const infoOverlay = document.getElementById('info-overlay');
+const infoTitle = document.getElementById('info-title');
+const infoMsg = document.getElementById('info-msg');
+const infoCloseBtn = document.getElementById('info-close-btn');
+const helpBtn = document.getElementById('help-btn');
+const aboutBtn = document.getElementById('about-btn');
+
+const tutorialHTML = `
+    <p><strong>WELCOME TO EXPENSO.</strong></p>
+    <br>
+    <p>1. <strong>MAGIC ENTRY:</strong> Type naturally (e.g. "I just bought a $5 coffee") and hit GO. The AI will parse it.</p>
+    <br>
+    <p>2. <strong>VOICE INPUT:</strong> Click SPEAK and dictate your expenses hands-free.</p>
+    <br>
+    <p>3. <strong>KILL SWITCH:</strong> Set strict spending limits for each category to identify where you are bankrupting yourself.</p>
+    <br>
+    <p>4. <strong>COACH CHAT:</strong> Ask the AI at the bottom of the screen for personalized advice based on your logged history.</p>
+`;
+
+const aboutHTML = `
+    <p><strong>EXPENSO // v1.0.0</strong></p>
+    <br>
+    <p>A brutalist, AI-powered financial tracker.</p>
+    <br>
+    <p>Built with no frameworks and no bloat. Powered by Groq AI and Supabase PostgreSQL.</p>
+`;
+
+function showInfo(title, htmlMsg) {
+    infoTitle.textContent = title;
+    infoMsg.innerHTML = htmlMsg;
+    infoOverlay.style.display = 'flex';
+}
+
+infoCloseBtn.addEventListener('click', () => {
+    infoOverlay.style.display = 'none';
+});
+
+helpBtn.addEventListener('click', () => {
+    settingsOverlay.style.display = 'none';
+    showInfo("HOW_TO_USE", tutorialHTML);
+});
+
+aboutBtn.addEventListener('click', () => {
+    settingsOverlay.style.display = 'none';
+    showInfo("ABOUT_SYSTEM", aboutHTML);
+});
+
 // CORE FUNCTIONS
 function save() {
     localStorage.setItem('expenso_limits', JSON.stringify(state.limits));
@@ -792,6 +840,14 @@ async function completeLogin() {
     appHeaderTitle.textContent = `EXPENSO. // ${username.toUpperCase()}`;
     showToast("ACCESS_GRANTED");
     await fetchExpenses();
+
+    // Show tutorial if first time
+    if (!localStorage.getItem('expenso_tutorial_seen')) {
+        setTimeout(() => {
+            showInfo("SYSTEM_INITIALIZATION", tutorialHTML);
+            localStorage.setItem('expenso_tutorial_seen', 'true');
+        }, 500);
+    }
 }
 
 async function fetchExpenses() {

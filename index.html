@@ -180,8 +180,26 @@
                     </div>
                 </div>
                 <div style="border-top: 2px dashed var(--black); padding-top: 15px;">
+                    <h3 style="margin-bottom: 10px; font-size: 1.2rem;">SYSTEM_INFO</h3>
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <button id="help-btn" style="flex: 1; padding: 10px; font-size: 0.8rem; border: 2px solid var(--black); background: var(--white); color: var(--black);">HELP_TUTORIAL</button>
+                        <button id="about-btn" style="flex: 1; padding: 10px; font-size: 0.8rem; border: 2px solid var(--black); background: var(--white); color: var(--black);">ABOUT_EXPENSO</button>
+                    </div>
                     <button id="logout-btn" style="width: 100%; background: var(--red); color: var(--black); padding: 10px; font-weight: bold; border: 2px solid var(--black);">LOGOUT_SYSTEM</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INFO MODAL -->
+    <div id="info-overlay" class="modal-overlay" style="display: none;">
+        <div id="info-modal" class="brutal-box" style="max-width: 500px; width: 90%; background: var(--white); text-align: left;">
+            <div class="box-header" style="margin-bottom: 20px;">
+                <h3 id="info-title">TITLE</h3>
+            </div>
+            <div id="info-msg" style="margin-bottom: 20px; font-family: 'Space Mono', monospace; font-size: 0.9rem; line-height: 1.5; word-break: break-word;">MESSAGE</div>
+            <div style="text-align: right;">
+                <button id="info-close-btn" style="background: var(--acid); color: var(--black); padding: 10px 20px; border: var(--border-width) solid var(--black); font-weight: bold;">UNDERSTOOD</button>
             </div>
         </div>
     </div>
