@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXPENSO</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- AUTH SCREEN -->
+    <div id="auth-screen">
+        <div class="brutal-box auth-box">
+            <div class="box-header">
+                <h2 id="auth-title">SYSTEM_LOGIN</h2>
+            </div>
+            <form id="auth-form">
+                <input type="text" id="auth-username" placeholder="USERNAME" autocomplete="username" style="display: none;">
+                <input type="email" id="auth-email" placeholder="EMAIL" autocomplete="email" required>
+                <input type="password" id="auth-password" placeholder="PASSWORD" autocomplete="current-password" required>
+                <button type="submit" id="auth-submit-btn">ENTER</button>
+            </form>
+            <button id="auth-toggle-btn">CREATE_ACCOUNT</button>
+        </div>
+    </div>
+
+    <main>
+        <header>
+            <h1 id="app-header-title">EXPENSO.</h1>
+            <div id="balance-container">
+                <span class="label">NET_WORTH</span>
+                <span id="total-balance">$0.00</span>
+                <button id="settings-btn" style="margin-top: 10px; padding: 5px 10px; font-size: 0.8rem; width: 100%; border: 2px solid var(--black); background: var(--white); color: var(--black);">SETTINGS</button>
+            </div>
+        </header>
+
+        <section id="magic-bar-section">
+            <div class="brutal-box magic-box">
+                <label for="magic-input">MAGIC_ENTRY</label>
+                <div class="input-group">
+                    <button id="yell-btn" title="Voice Input">SPEAK</button>
+                    <input type="text" id="magic-input" placeholder="SPENT 20 ON COFFEE AT STARBUCKS..."
+                        autocomplete="off">
+                    <button id="magic-btn">GO</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="stats-section">
+            <div class="stats-grid">
+                <div class="brutal-box income">
+                    <span class="label">IN_FLOW</span>
+                    <span id="total-income">+$0</span>
+                </div>
+                <div class="brutal-box expense">
+                    <span class="label">OUT_FLOW</span>
+                    <span id="total-expense">-$0</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="charts-section">
+            <div class="stats-grid">
+                <div class="brutal-box chart-box">
+                    <span class="label">SPENDING_BLOCKS</span>
+                    <div id="category-chart">
+                        <div class="empty-state">NO_DATA</div>
+                    </div>
+                </div>
+                <div class="brutal-box chart-box">
+                    <span class="label">TOP_EXPENSES</span>
+                    <div id="mistakes-list">
+                        <div class="empty-state">NO_DATA</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="limits-section">
+            <div class="brutal-box limits-box">
+                <div class="box-header">
+                    <h2>KILL_SWITCH</h2>
+                </div>
+                <div class="input-group">
+                    <select id="limit-cat">
+                        <option value="FOOD">FOOD</option>
+                        <option value="TRANSPORT">TRANSPORT</option>
+                        <option value="ENTERTAINMENT">ENTERTAINMENT</option>
+                        <option value="UTILITIES">UTILITIES</option>
+                        <option value="SHOPPING">SHOPPING</option>
+                        <option value="HEALTH">HEALTH</option>
+                        <option value="OTHER">OTHER</option>
+                    </select>
+                    <input type="number" id="limit-amount" placeholder="LIMIT $">
+                    <button id="limit-btn">SET</button>
+                </div>
+                <div id="limits-list" style="margin-top: 20px;">
+                    <div class="empty-state">NO_LIMITS_SET</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="history-section">
+            <div class="brutal-box history-box">
+                <div class="box-header">
+                    <h2>LOG_ACTIVITY</h2>
+                    <div style="display:flex; gap:10px; align-items: center; flex-wrap: wrap;">
+                        <select id="filter-select" style="padding: 5px; font-size: 0.7rem; border: 2px solid var(--black); width: auto; flex: none;">
+                            <option value="ALL">ALL</option>
+                            <option value="FOOD">FOOD</option>
+                            <option value="TRANSPORT">TRANSPORT</option>
+                            <option value="ENTERTAINMENT">ENTERTAINMENT</option>
+                            <option value="UTILITIES">UTILITIES</option>
+                            <option value="SHOPPING">SHOPPING</option>
+                            <option value="HEALTH">HEALTH</option>
+                            <option value="OTHER">OTHER</option>
+                        </select>
+                        <select id="sort-select" style="padding: 5px; font-size: 0.7rem; border: 2px solid var(--black); width: auto; flex: none;">
+                            <option value="LATEST">LATEST</option>
+                            <option value="DAMAGE">DAMAGE</option>
+                        </select>
+                        <button id="clear-btn">CLEAR_ALL</button>
+                    </div>
+                </div>
+                <div id="expense-list">
+                    <!-- Transactions will be injected here -->
+                    <div class="empty-state">NO_DATA_AVAILABLE</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ai-insights">
+            <div class="brutal-box insight-box">
+                <div style="display:flex; justify-content: space-between; align-items: center;">
+                    <span class="label">AI_COACH</span>
+                    <button id="roast-btn" style="padding: 5px 10px; font-size: 0.7rem; background: var(--black); color: var(--acid); border: none;">ANALYZE_MONTH</button>
+                </div>
+                <p id="ai-advice">ADD DATA TO TRIGGER INSIGHTS.</p>
+            </div>
+        </section>
+
+        <section id="chat-section">
+            <div class="brutal-box chat-box" style="display: flex; flex-direction: column; gap: 15px;">
+                <div class="box-header" style="margin-bottom: 0;">
+                    <h2>COACH_CHAT</h2>
+                </div>
+                <div id="chat-window">
+                    <div class="chat-message msg-ai">HELLO. I AM YOUR FINANCIAL COACH. ASK ME ANYTHING ABOUT YOUR DATA.</div>
+                </div>
+                <div class="input-group" style="margin-top: 0;">
+                    <input type="text" id="chat-input" placeholder="HOW MUCH DID I SPEND ON FOOD?" autocomplete="off">
+                    <button id="chat-btn">SEND</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="toast" class="brutal-box">MESSAGE_HERE</div>
+
+    <div id="settings-overlay" class="modal-overlay" style="display: none;">
+        <div class="brutal-box" style="max-width: 400px; width: 90%; background: var(--white); text-align: left;">
+            <div class="box-header" style="margin-bottom: 20px;">
+                <h2>SETTINGS</h2>
+                <button id="close-settings-btn" style="padding: 5px 10px; font-size: 0.8rem; background: var(--red);">X</button>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <button id="invert-btn" style="background: var(--black); color: var(--acid); padding: 10px;">INVERT_REALITY</button>
+                <div style="border-top: 2px dashed var(--black); padding-top: 15px;">
+                    <h3 style="margin-bottom: 10px; font-size: 1.2rem;">DATA_VAULT</h3>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button id="export-btn" style="flex: 1; padding: 10px; font-size: 0.8rem; border: 2px solid var(--black); background: var(--white); color: var(--black);">EXPORT_JSON</button>
+                        <button id="export-pdf-btn" style="flex: 1; padding: 10px; font-size: 0.8rem; border: 2px solid var(--black); background: var(--acid); color: var(--black);">EXPORT_PDF</button>
+                        <label for="import-file" style="flex: 1 1 100%; padding: 10px; font-size: 0.8rem; background: var(--black); color: var(--white); text-align: center; cursor: pointer; border: 2px solid var(--black); font-weight: 700;">IMPORT_JSON</label>
+                        <input type="file" id="import-file" accept=".json" style="display: none;">
+                    </div>
+                </div>
+                <div style="border-top: 2px dashed var(--black); padding-top: 15px;">
+                    <button id="logout-btn" style="width: 100%; background: var(--red); color: var(--black); padding: 10px; font-weight: bold; border: 2px solid var(--black);">LOGOUT_SYSTEM</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-overlay" class="modal-overlay">
+        <div id="confirm-modal" class="brutal-box">
+            <h3 id="modal-title">CONFIRM_ACTION</h3>
+            <p id="modal-msg">ARE_YOU_SURE?</p>
+            <div class="modal-buttons">
+                <button id="modal-cancel-btn"
+                    style="background: var(--white); color: var(--black); border: var(--border-width) solid var(--black);">CANCEL</button>
+                <button id="modal-confirm-btn" style="background: var(--red);">CONFIRM</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HIDDEN PDF TEMPLATE -->
+    <div id="pdf-template-container" style="display: none;">
+        <div id="pdf-report">
+            <div class="pdf-header">
+                <h1>EXPENSO.</h1>
+                <h2>FINANCIAL DOSSIER</h2>
+            </div>
+            
+            <div class="pdf-section">
+                <h3>AI_ANALYSIS</h3>
+                <p id="pdf-ai-analysis">GENERATING...</p>
+            </div>
+
+            <div class="pdf-section">
+                <h3>PORTFOLIO_SUMMARY</h3>
+                <div class="pdf-stats">
+                    <div><span class="label">NET_WORTH</span> <strong id="pdf-net">$0.00</strong></div>
+                    <div><span class="label">INCOME</span> <strong id="pdf-income">$0.00</strong></div>
+                    <div><span class="label">EXPENSES</span> <strong id="pdf-expenses">$0.00</strong></div>
+                </div>
+            </div>
+
+            <div class="pdf-section">
+                <h3>TRANSACTION_LEDGER</h3>
+                <table id="pdf-table">
+                    <thead>
+                        <tr>
+                            <th>DATE</th>
+                            <th>TYPE</th>
+                            <th>CATEGORY</th>
+                            <th>AMOUNT</th>
+                            <th>NOTE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pdf-table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script type="module" src="/app.js"></script>
+</body>
+
+</html>
