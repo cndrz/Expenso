@@ -858,7 +858,9 @@ authForm.addEventListener('submit', async (e) => {
         if (isLoginMode) {
             const { data, error } = await supabase.auth.signInWithPassword({ email, password });
             if (error) throw error;
+            if (!data.session) throw new Error("EMAIL_NOT_VERIFIED");
             currentUser = data.user;
+            await completeLogin();
         } else {
             const { data, error } = await supabase.auth.signUp({
                 email,
@@ -866,9 +868,23 @@ authForm.addEventListener('submit', async (e) => {
                 options: { data: { username: username } }
             });
             if (error) throw error;
-            currentUser = data.user;
+            
+            if (!data.session) {
+                showToast("ACCOUNT_CREATED. CHECK_EMAIL_TO_VERIFY.");
+                // Switch back to login mode visually
+                isLoginMode = true;
+                authTitle.textContent = "SYSTEM_LOGIN";
+                authUsername.style.display = "none";
+                authUsername.required = false;
+                authConfirmPassword.style.display = "none";
+                authConfirmPassword.required = false;
+                authToggleBtn.textContent = "CREATE_ACCOUNT";
+                authForm.reset();
+            } else {
+                currentUser = data.user;
+                await completeLogin();
+            }
         }
-        await completeLogin();
     } catch (error) {
         showToast("AUTH_FAILED: " + error.message);
     } finally {
