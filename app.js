@@ -80,6 +80,8 @@ const authForm = document.getElementById('auth-form');
 const authUsername = document.getElementById('auth-username');
 const authEmail = document.getElementById('auth-email');
 const authPassword = document.getElementById('auth-password');
+const authConfirmPassword = document.getElementById('auth-confirm-password');
+const showPasswordBtn = document.getElementById('show-password-btn');
 const authSubmitBtn = document.getElementById('auth-submit-btn');
 const authToggleBtn = document.getElementById('auth-toggle-btn');
 const logoutBtn = document.getElementById('logout-btn');
@@ -777,12 +779,28 @@ authToggleBtn.addEventListener('click', () => {
         authTitle.textContent = "SYSTEM_LOGIN";
         authUsername.style.display = "none";
         authUsername.required = false;
+        authConfirmPassword.style.display = "none";
+        authConfirmPassword.required = false;
         authToggleBtn.textContent = "CREATE_ACCOUNT";
     } else {
         authTitle.textContent = "REGISTER_USER";
         authUsername.style.display = "block";
         authUsername.required = true;
+        authConfirmPassword.style.display = "block";
+        authConfirmPassword.required = true;
         authToggleBtn.textContent = "HAVE_ACCOUNT? LOGIN";
+    }
+});
+
+showPasswordBtn.addEventListener('click', () => {
+    if (authPassword.type === "password") {
+        authPassword.type = "text";
+        authConfirmPassword.type = "text";
+        showPasswordBtn.textContent = "HIDE";
+    } else {
+        authPassword.type = "password";
+        authConfirmPassword.type = "password";
+        showPasswordBtn.textContent = "SHOW";
     }
 });
 
@@ -795,7 +813,13 @@ authForm.addEventListener('submit', async (e) => {
 
     const email = authEmail.value;
     const password = authPassword.value;
+    const confirmPassword = authConfirmPassword.value;
     const username = authUsername.value;
+
+    if (!isLoginMode && password !== confirmPassword) {
+        showToast("PASSWORDS_DO_NOT_MATCH");
+        return;
+    }
 
     authSubmitBtn.textContent = "WAIT...";
     authSubmitBtn.disabled = true;
