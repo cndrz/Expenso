@@ -137,9 +137,13 @@ aboutBtn.addEventListener('click', () => {
 
 // CORE FUNCTIONS
 function save() {
-    localStorage.setItem('expenso_limits', JSON.stringify(state.limits));
-    localStorage.setItem('expenso_invert', JSON.stringify(state.invert));
-    render();
+    try {
+        localStorage.setItem('expenso_limits', JSON.stringify(state.limits));
+        localStorage.setItem('expenso_invert', JSON.stringify(state.invert));
+        render();
+    } catch (e) {
+        showToast("STORAGE_ERROR");
+    }
 }
 
 function showToast(msg) {
@@ -217,44 +221,49 @@ async function callAI(text) {
 }
 
 async function handleMagicEntry() {
-    const text = magicInput.value.trim();
-    if (!text) return;
+    try {
+        const text = magicInput.value.trim();
+        if (!text) return;
 
-    const result = await callAI(text);
-    if (result) {
-        const newExpense = {
-            ...result,
-            date: new Date().toISOString()
-        };
-        
-        let newId = crypto.randomUUID();
-        if (supabase && currentUser) {
-            const { data: insertData, error } = await supabase.from('expenses').insert([{
-                user_id: currentUser.id,
-                amount: newExpense.amount,
-                category: newExpense.category,
-                note: newExpense.note,
-                type: newExpense.type,
-                merchant: newExpense.merchant,
-                date: newExpense.date
-            }]).select();
+        const result = await callAI(text);
+        if (result) {
+            const newExpense = {
+                ...result,
+                date: new Date().toISOString()
+            };
             
-            if (error) {
-                showToast("SYNC_FAILED");
-                magicBtn.textContent = "GO";
-                return;
+            let newId = crypto.randomUUID();
+            if (supabase && currentUser) {
+                const { data: insertData, error } = await supabase.from('expenses').insert([{
+                    user_id: currentUser.id,
+                    amount: newExpense.amount,
+                    category: newExpense.category,
+                    note: newExpense.note,
+                    type: newExpense.type,
+                    merchant: newExpense.merchant,
+                    date: newExpense.date
+                }]).select();
+                
+                if (error) {
+                    showToast("SYNC_FAILED");
+                    magicBtn.textContent = "GO";
+                    return;
+                }
+                if (insertData && insertData.length > 0) {
+                    newId = insertData[0].id;
+                }
             }
-            if (insertData && insertData.length > 0) {
-                newId = insertData[0].id;
-            }
+            
+            newExpense.id = newId;
+            state.expenses.unshift(newExpense);
+            magicInput.value = "";
+            save();
+            showToast("ENTRY_LOGGED");
+            updateAIAdvice();
         }
-        
-        newExpense.id = newId;
-        state.expenses.unshift(newExpense);
-        magicInput.value = "";
-        save();
-        showToast("ENTRY_LOGGED");
-        updateAIAdvice();
+    } catch (e) {
+        showToast("ENTRY_FAILED");
+        magicBtn.textContent = "GO";
     }
 }
 
@@ -286,14 +295,19 @@ async function updateAIAdvice() {
 }
 
 window.deleteExpense = async (id) => {
-    const confirmed = await showModal("DELETE_ENTRY", "ARE_YOU_SURE?");
-    if (confirmed) {
-        if (supabase && currentUser) {
-            await supabase.from('expenses').delete().eq('id', id);
+    try {
+        const confirmed = await showModal("DELETE_ENTRY", "ARE_YOU_SURE?");
+        if (confirmed) {
+            if (supabase && currentUser) {
+                const { error } = await supabase.from('expenses').delete().eq('id', id);
+                if (error) throw error;
+            }
+            state.expenses = state.expenses.filter(e => e.id !== id);
+            save();
+            showToast("ENTRY_DELETED");
         }
-        state.expenses = state.expenses.filter(e => e.id !== id);
-        save();
-        showToast("ENTRY_DELETED");
+    } catch (e) {
+        showToast("DELETE_FAILED");
     }
 };
 
@@ -367,10 +381,17 @@ function renderLimits() {
     `).join('');
 }
 
-window.deleteLimit = (cat) => {
-    delete state.limits[cat];
-    save();
-    showToast("LIMIT_DELETED");
+window.deleteLimit = async (cat) => {
+    try {
+        const confirmed = await showModal("DELETE_LIMIT", "ARE_YOU_SURE?");
+        if (confirmed) {
+            delete state.limits[cat];
+            save();
+            showToast("LIMIT_DELETED");
+        }
+    } catch (e) {
+        showToast("ERROR_DELETING_LIMIT");
+    }
 };
 
 window.adjustLimit = (cat, limit) => {
@@ -499,16 +520,20 @@ magicInput.addEventListener('keypress', (e) => {
 });
 
 limitBtn.addEventListener('click', () => {
-    const cat = limitCatInput.value;
-    const amt = parseFloat(limitAmountInput.value);
-    if (cat && !isNaN(amt)) {
-        state.limits[cat] = amt;
-        limitCatInput.value = '';
-        limitAmountInput.value = '';
-        save();
-        showToast("LIMIT_SET");
-    } else {
-        showToast("INVALID_INPUT");
+    try {
+        const cat = limitCatInput.value;
+        const amt = parseFloat(limitAmountInput.value);
+        if (cat && !isNaN(amt)) {
+            state.limits[cat] = amt;
+            limitCatInput.value = '';
+            limitAmountInput.value = '';
+            save();
+            showToast("LIMIT_SET");
+        } else {
+            showToast("INVALID_INPUT");
+        }
+    } catch (e) {
+        showToast("LIMIT_ERROR");
     }
 });
 
@@ -694,15 +719,20 @@ roastBtn.addEventListener('click', async () => {
 });
 
 clearBtn.addEventListener('click', async () => {
-    const confirmed = await showModal("PURGE_DATA", "WIPE_ALL_HISTORY?");
-    if (confirmed) {
-        if (supabase && currentUser) {
-            await supabase.from('expenses').delete().eq('user_id', currentUser.id);
+    try {
+        const confirmed = await showModal("PURGE_DATA", "WIPE_ALL_HISTORY?");
+        if (confirmed) {
+            if (supabase && currentUser) {
+                const { error } = await supabase.from('expenses').delete().eq('user_id', currentUser.id);
+                if (error) throw error;
+            }
+            state.expenses = [];
+            save();
+            aiAdviceEl.textContent = "DATA_PURGED.";
+            showToast("STORAGE_CLEARED");
         }
-        state.expenses = [];
-        save();
-        aiAdviceEl.textContent = "DATA_PURGED.";
-        showToast("STORAGE_CLEARED");
+    } catch (e) {
+        showToast("PURGE_FAILED");
     }
 });
 
@@ -848,14 +878,20 @@ authForm.addEventListener('submit', async (e) => {
 });
 
 logoutBtn.addEventListener('click', async () => {
-    if (supabase) await supabase.auth.signOut();
-    currentUser = null;
-    state.expenses = [];
-    render();
-    authScreen.style.display = 'flex';
-    settingsOverlay.style.display = 'none';
-    appHeaderTitle.textContent = "EXPENSO.";
-    showToast("LOGGED_OUT");
+    try {
+        const confirmed = await showModal("LOGOUT", "ARE_YOU_SURE?");
+        if (!confirmed) return;
+        if (supabase) await supabase.auth.signOut();
+        currentUser = null;
+        state.expenses = [];
+        render();
+        authScreen.style.display = 'flex';
+        settingsOverlay.style.display = 'none';
+        appHeaderTitle.textContent = "EXPENSO.";
+        showToast("LOGGED_OUT");
+    } catch (e) {
+        showToast("LOGOUT_FAILED");
+    }
 });
 
 async function completeLogin() {
@@ -876,28 +912,36 @@ async function completeLogin() {
 
 async function fetchExpenses() {
     if (!supabase || !currentUser) return;
-    const { data, error } = await supabase
-        .from('expenses')
-        .select('*')
-        .order('date', { ascending: false });
-    
-    if (error) {
+    try {
+        const { data, error } = await supabase
+            .from('expenses')
+            .select('*')
+            .order('date', { ascending: false });
+        
+        if (error) throw error;
+        
+        state.expenses = data || [];
+        render();
+        if (state.expenses.length > 0) updateAIAdvice();
+    } catch (e) {
         showToast("FETCH_FAILED");
-        return;
     }
-    
-    state.expenses = data || [];
-    render();
-    if (state.expenses.length > 0) updateAIAdvice();
 }
 
 async function checkSession() {
     if (!supabase) return;
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session) {
-        currentUser = session.user;
-        await completeLogin();
-    } else {
+    try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        if (error) throw error;
+        if (session) {
+            currentUser = session.user;
+            await completeLogin();
+        } else {
+            authScreen.style.display = 'flex';
+            appHeaderTitle.textContent = "EXPENSO.";
+        }
+    } catch (e) {
+        showToast("SESSION_ERROR");
         authScreen.style.display = 'flex';
         appHeaderTitle.textContent = "EXPENSO.";
     }
