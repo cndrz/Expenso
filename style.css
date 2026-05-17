@@ -322,6 +322,39 @@ body.invert-reality {
     .stats-grid { grid-template-columns: 1fr; }
     header { flex-direction: column; align-items: flex-start; }
     .input-group { flex-direction: column; }
+    #balance-container {
+        text-align: left;
+        width: 100%;
+        margin-top: 15px;
+    }
+    #settings-btn {
+        width: 100%;
+    }
+    .expense-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .expense-item > div:last-child {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .chart-label-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    #toast {
+        left: 20px;
+        right: 20px;
+        text-align: center;
+    }
+    .chat-message {
+        max-width: 95%;
+    }
+    .brutal-box {
+        padding: 15px;
+    }
 }
 
 /* KILL SWITCH / BANKRUPT STYLES */
@@ -612,16 +645,18 @@ body.invert-reality {
 @media (max-width: 900px) {
     #auth-screen {
         flex-direction: column;
+        overflow-y: auto;
+        justify-content: flex-start;
     }
     .auth-showcase {
-        flex: 0.6;
+        flex: none;
         padding: 30px;
         border-right: none;
         border-bottom: var(--border-width) solid var(--black);
         padding-bottom: 70px;
     }
     .auth-hero-title {
-        font-size: 4rem;
+        font-size: 3.5rem;
     }
     .auth-subtitle {
         font-size: 1.1rem;
@@ -631,7 +666,21 @@ body.invert-reality {
         font-size: 1rem;
     }
     .auth-form-container {
-        flex: 1;
+        flex: none;
         padding: 40px 20px;
+        min-height: 50vh;
+    }
+}
+
+@media (max-width: 400px) {
+    .auth-hero-title {
+        font-size: 2.5rem;
+    }
+    .auth-marquee {
+        font-size: 1rem;
+        padding: 10px 0;
+    }
+    .auth-features {
+        font-size: 0.9rem;
     }
 }
