@@ -541,8 +541,11 @@ body.invert-reality {
     grid-template-areas: 
         "hero form"
         "details form"
-        "marquee form";
+        "marquee marquee";
     z-index: 9999;
+}
+#auth-screen > * {
+    min-width: 0;
 }
 
 .auth-hero {
@@ -700,16 +703,15 @@ body.invert-reality {
 
 @media (max-width: 768px) {
     #auth-screen {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto auto;
-        grid-template-areas: 
-            "hero"
-            "form"
-            "details"
-            "marquee";
+        display: flex;
+        flex-direction: column;
         overflow-y: auto;
         height: 100%;
     }
+    .auth-hero { order: 1; }
+    .auth-form-wrapper { order: 2; width: 100%; }
+    .auth-details { order: 3; }
+    .auth-marquee { order: 4; width: 100%; }
     
     .auth-details, .auth-marquee, .auth-subtitle {
         display: flex;
