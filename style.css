@@ -507,22 +507,43 @@ body.invert-reality {
 #auth-screen {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: var(--white);
-    display: flex;
-    flex-direction: row;
+    background: var(--acid);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: 
+        "hero form"
+        "details form"
+        "marquee form";
     z-index: 9999;
 }
 
-.auth-showcase {
-    flex: 1;
-    background: var(--acid);
-    border-right: var(--border-width) solid var(--black);
-    padding: 60px;
+.auth-hero {
+    grid-area: hero;
+    padding: 60px 60px 20px 60px;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
+}
+
+.auth-details {
+    grid-area: details;
+    padding: 0 60px 60px 60px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.auth-form-wrapper {
+    grid-area: form;
+    background: var(--white);
+    border-left: var(--border-width) solid var(--black);
+    display: flex;
     justify-content: center;
-    position: relative;
-    overflow: hidden;
+    align-items: center;
+    padding: 40px;
+    overflow-y: auto;
 }
 
 .auth-hero-title {
@@ -532,38 +553,53 @@ body.invert-reality {
     letter-spacing: -3px;
     margin-bottom: 20px;
     line-height: 1;
+    word-break: break-word;
 }
 
 .auth-subtitle {
     font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 40px;
     max-width: 450px;
+}
+
+.auth-description {
+    font-weight: 700;
+    margin-bottom: 30px;
+    font-size: 1rem;
+    max-width: 450px;
+    line-height: 1.5;
 }
 
 .auth-features {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
     font-size: 1.2rem;
     font-weight: 700;
+    max-width: 450px;
 }
 
 .feature-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 10px;
 }
 
 .feature-icon {
     font-size: 1rem;
+    margin-top: 4px;
+}
+
+.feature-subtext {
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-top: 5px;
+    opacity: 0.9;
+    line-height: 1.4;
 }
 
 .auth-marquee {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+    grid-area: marquee;
     background: var(--black);
     color: var(--acid);
     padding: 15px 0;
@@ -591,15 +627,6 @@ body.invert-reality {
     100% { transform: translateX(-100%); }
 }
 
-.auth-form-container {
-    flex: 1;
-    background: var(--white);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
 .auth-box {
     width: 100%;
     max-width: 400px;
@@ -622,6 +649,8 @@ body.invert-reality {
     font-family: 'Space Mono', monospace;
     width: 100%;
     box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
 }
 #auth-submit-btn {
     padding: 15px;
@@ -644,43 +673,50 @@ body.invert-reality {
 
 @media (max-width: 900px) {
     #auth-screen {
-        flex-direction: column;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        grid-template-areas: 
+            "hero"
+            "form";
         overflow-y: auto;
-        justify-content: flex-start;
+        height: 100%;
     }
-    .auth-showcase {
-        flex: none;
-        padding: 30px;
-        border-right: none;
-        border-bottom: var(--border-width) solid var(--black);
-        padding-bottom: 70px;
+    
+    .auth-details, .auth-marquee, .auth-subtitle {
+        display: none;
     }
-    .auth-hero-title {
-        font-size: 3.5rem;
+
+    .auth-hero {
+        padding: 60px 20px 40px 20px;
+        align-items: center;
+        justify-content: center;
     }
-    .auth-subtitle {
-        font-size: 1.1rem;
-        margin-bottom: 20px;
-    }
-    .auth-features {
-        font-size: 1rem;
-    }
-    .auth-form-container {
-        flex: none;
+    
+    .auth-form-wrapper {
+        border-left: none;
+        border-top: var(--border-width) solid var(--black);
+        border-bottom: none;
         padding: 40px 20px;
-        min-height: 50vh;
+        align-items: flex-start;
+    }
+    
+    .auth-hero-title {
+        font-size: 4rem;
+        margin-bottom: 0;
+        text-align: center;
     }
 }
 
 @media (max-width: 400px) {
     .auth-hero-title {
-        font-size: 2.5rem;
+        font-size: 3rem;
     }
     .auth-marquee {
-        font-size: 1rem;
+        font-size: 1.2rem;
         padding: 10px 0;
     }
-    .auth-features {
-        font-size: 0.9rem;
+    h2#auth-title {
+        font-size: 1.3rem;
+        word-break: break-all;
     }
 }
