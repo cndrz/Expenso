@@ -509,13 +509,17 @@ body.invert-reality {
     top: 0; left: 0; width: 100%; height: 100%;
     background: var(--acid);
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-template-rows: auto 1fr auto;
     grid-template-areas: 
         "hero form"
         "details form"
         "marquee form";
     z-index: 9999;
+}
+
+#auth-screen > * {
+    min-width: 0;
 }
 
 .auth-hero {
