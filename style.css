@@ -509,17 +509,13 @@ body.invert-reality {
     top: 0; left: 0; width: 100%; height: 100%;
     background: var(--acid);
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto 1fr auto;
     grid-template-areas: 
         "hero form"
         "details form"
         "marquee form";
     z-index: 9999;
-}
-
-#auth-screen > * {
-    min-width: 0;
 }
 
 .auth-hero {
@@ -678,36 +674,44 @@ body.invert-reality {
 @media (max-width: 900px) {
     #auth-screen {
         grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr;
+        grid-template-rows: auto auto auto auto;
         grid-template-areas: 
             "hero"
-            "form";
+            "form"
+            "details"
+            "marquee";
         overflow-y: auto;
         height: 100%;
     }
     
-    .auth-details, .auth-marquee, .auth-subtitle {
-        display: none;
-    }
-
     .auth-hero {
-        padding: 60px 20px 40px 20px;
-        align-items: center;
-        justify-content: center;
+        padding: 40px 20px 20px 20px;
     }
-    
+    .auth-details {
+        padding: 20px 20px 40px 20px;
+        overflow-y: visible;
+    }
     .auth-form-wrapper {
         border-left: none;
         border-top: var(--border-width) solid var(--black);
-        border-bottom: none;
+        border-bottom: var(--border-width) solid var(--black);
         padding: 40px 20px;
-        align-items: flex-start;
+        min-height: auto;
     }
-    
     .auth-hero-title {
         font-size: 4rem;
+    }
+    .auth-subtitle {
+        font-size: 1.2rem;
         margin-bottom: 0;
-        text-align: center;
+    }
+    .auth-description {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+    .auth-features {
+        font-size: 1.1rem;
+        max-width: 100%;
     }
 }
 
