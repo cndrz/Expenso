@@ -1,9 +1,9 @@
 :root {
     --black: #000000;
     --white: #ffffff;
-    --acid: #CCFF00; /* Neon Lime */
+    --acid: #ccff00; /* Neon Lime */
     --gray: #e0e0e0;
-    --red: #FF3B3B;
+    --red: #ff3b3b;
     --border-width: 4px;
     --box-shadow: 8px 8px 0px var(--black);
 }
@@ -17,7 +17,7 @@
 body {
     background-color: var(--white);
     color: var(--black);
-    font-family: 'Space Mono', monospace;
+    font-family: "Space Mono", monospace;
     line-height: 1.4;
     padding: 20px;
     text-transform: uppercase;
@@ -40,7 +40,7 @@ header {
 }
 
 h1 {
-    font-family: 'Syne', sans-serif;
+    font-family: "Syne", sans-serif;
     font-size: 4rem;
     font-weight: 800;
     letter-spacing: -2px;
@@ -71,7 +71,9 @@ h1 {
     padding: 20px;
     box-shadow: var(--box-shadow);
     background: var(--white);
-    transition: transform 0.1s, box-shadow 0.1s;
+    transition:
+        transform 0.1s,
+        box-shadow 0.1s;
 }
 
 .brutal-box:hover {
@@ -89,7 +91,9 @@ h1 {
     margin-top: 10px;
 }
 
-input[type="text"], input[type="number"], select {
+input[type="text"],
+input[type="number"],
+select {
     flex: 1;
     border: var(--border-width) solid var(--black);
     padding: 15px;
@@ -134,18 +138,31 @@ button:active {
     gap: 20px;
 }
 
-.income { border-color: var(--black); }
-.expense { border-color: var(--black); }
+.income {
+    border-color: var(--black);
+}
+.expense {
+    border-color: var(--black);
+}
 
-#total-income { font-size: 1.5rem; display: block; font-weight: 700; }
-#total-expense { font-size: 1.5rem; display: block; font-weight: 700; }
+#total-income {
+    font-size: 1.5rem;
+    display: block;
+    font-weight: 700;
+}
+#total-expense {
+    font-size: 1.5rem;
+    display: block;
+    font-weight: 700;
+}
 
 /* CHARTS SECTION */
 .chart-box {
     min-height: 200px;
 }
 
-#category-chart, #mistakes-list {
+#category-chart,
+#mistakes-list {
     margin-top: 15px;
     display: flex;
     flex-direction: column;
@@ -208,7 +225,7 @@ button:active {
 }
 
 h2 {
-    font-family: 'Syne', sans-serif;
+    font-family: "Syne", sans-serif;
     font-size: 1.5rem;
 }
 
@@ -237,8 +254,14 @@ h2 {
     flex-direction: column;
 }
 
-.item-note { font-weight: 700; font-size: 1.1rem; }
-.item-meta { font-size: 0.7rem; opacity: 0.7; }
+.item-note {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+.item-meta {
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
 
 .item-amount {
     font-size: 1.2rem;
@@ -300,7 +323,7 @@ body.invert-reality {
 }
 
 #modal-title {
-    font-family: 'Syne', sans-serif;
+    font-family: "Syne", sans-serif;
     font-size: 1.5rem;
     margin-bottom: 10px;
     word-break: break-word;
@@ -318,10 +341,19 @@ body.invert-reality {
 }
 
 @media (max-width: 600px) {
-    h1 { font-size: 2.5rem; }
-    .stats-grid { grid-template-columns: 1fr; }
-    header { flex-direction: column; align-items: flex-start; }
-    .input-group { flex-direction: column; }
+    h1 {
+        font-size: 2.5rem;
+    }
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .input-group {
+        flex-direction: column;
+    }
     #balance-container {
         text-align: left;
         width: 100%;
@@ -378,20 +410,42 @@ body.invert-reality {
 }
 
 @keyframes glitch {
-    0% { transform: translate(0) }
-    20% { transform: translate(-2px, 2px) }
-    40% { transform: translate(-2px, -2px) }
-    60% { transform: translate(2px, 2px) }
-    80% { transform: translate(2px, -2px) }
-    100% { transform: translate(0) }
+    0% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        transform: translate(-2px, -2px);
+    }
+    60% {
+        transform: translate(2px, 2px);
+    }
+    80% {
+        transform: translate(2px, -2px);
+    }
+    100% {
+        transform: translate(0);
+    }
 }
 
 @keyframes shake {
-    0% { transform: translateX(0) }
-    25% { transform: translateX(-2px) }
-    50% { transform: translateX(2px) }
-    75% { transform: translateX(-2px) }
-    100% { transform: translateX(0) }
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-2px);
+    }
+    50% {
+        transform: translateX(2px);
+    }
+    75% {
+        transform: translateX(-2px);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }
 
 /* CHAT STYLES */
@@ -433,7 +487,7 @@ body.invert-reality {
     padding: 30px;
     background: #ffffff;
     color: #000000;
-    font-family: 'Space Mono', monospace;
+    font-family: "Space Mono", monospace;
     box-sizing: border-box;
 }
 
@@ -446,7 +500,7 @@ body.invert-reality {
 #pdf-report h1 {
     font-size: 2.5rem;
     margin: 0;
-    font-family: 'Syne', sans-serif;
+    font-family: "Syne", sans-serif;
 }
 
 #pdf-report h2 {
@@ -482,7 +536,8 @@ body.invert-reality {
     font-size: 0.8rem;
 }
 
-#pdf-table th, #pdf-table td {
+#pdf-table th,
+#pdf-table td {
     border: 2px solid #000000;
     padding: 8px;
     text-align: left;
@@ -506,12 +561,15 @@ body.invert-reality {
 /* AUTH SCREEN SPLIT DESIGN */
 #auth-screen {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: var(--acid);
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto 1fr auto;
-    grid-template-areas: 
+    grid-template-areas:
         "hero form"
         "details form"
         "marquee form";
@@ -547,7 +605,7 @@ body.invert-reality {
 }
 
 .auth-hero-title {
-    font-family: 'Syne', sans-serif;
+    font-family: "Syne", sans-serif;
     font-size: 6rem;
     font-weight: 800;
     letter-spacing: -3px;
@@ -623,8 +681,12 @@ body.invert-reality {
 }
 
 @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
 }
 
 .auth-box {
@@ -646,7 +708,7 @@ body.invert-reality {
     border: var(--border-width) solid var(--black);
     background: var(--white);
     color: var(--black);
-    font-family: 'Space Mono', monospace;
+    font-family: "Space Mono", monospace;
     width: 100%;
     box-sizing: border-box;
     appearance: none;
@@ -675,7 +737,7 @@ body.invert-reality {
     #auth-screen {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto auto;
-        grid-template-areas: 
+        grid-template-areas:
             "hero"
             "form"
             "details"
@@ -683,7 +745,7 @@ body.invert-reality {
         overflow-y: auto;
         height: 100%;
     }
-    
+
     .auth-hero {
         padding: 40px 20px 20px 20px;
     }
