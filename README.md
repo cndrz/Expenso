@@ -1,4 +1,4 @@
-# EXPENSO // BRUTALIST
+# EXPENSO
 
 A raw, minimalistic, AI-powered expense tracker. Built with a brutalist design philosophy. No bloat. Just data and actionable insights.
 
